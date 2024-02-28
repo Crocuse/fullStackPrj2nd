@@ -8,5 +8,7 @@ import lombok.extern.log4j.Log4j2;
 @Controller
 public class homeController {
 	
-	//ㅎㅎㅇㅎㅇㅎ
+
+	// 뀨뀨뀨뀨뀨
+
 }
