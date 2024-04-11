@@ -65,6 +65,23 @@
         WHERE 
         	U_ID = #{u_id}
     </select>
+    <select id="seletUserFindInfo" resultType="com.office.ticketreserve.user.UserDto" parameterType="map">
+	    SELECT 
+	        * 
+	    FROM 
+	        TBL_USER 
+	    WHERE 
+	        U_ID = #{u_id} AND U_MAIL = #{u_mail}
+	</select>
+    <update id="updatePassword" parameterType="map">
+	    UPDATE 
+	        TBL_USER 
+	    SET 
+	        U_PW = #{newPassword}, 
+	        U_MOD_DATE = CURRENT_TIMESTAMP 
+	    WHERE 
+	        U_ID = #{u_id}
+	</update>
 	<delete id="deleteUser" 
 			parameterType="Integer">
 		DELETE FROM 
