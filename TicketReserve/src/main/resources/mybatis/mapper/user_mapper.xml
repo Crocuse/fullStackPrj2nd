@@ -3,7 +3,68 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.office.ticketreserve.user.IUserDaoForMybatis">
-
+	<select id="isUser" parameterType="String" resultType="boolean">
+		SELECT COUNT(*) 
+		FROM 
+			TBL_USER 
+		WHERE 
+			U_ID = #{u_id} 
+	</select>
+	  <insert id="insertUser">
+        INSERT INTO TBL_USER (
+            U_NO,
+            U_ID,
+            U_PW,
+            U_NAME,
+            U_MAIL,
+            U_PHONE,
+            U_SC_NUM,
+            U_ADDRESS,
+            U_REG_DATE,
+            U_MOD_DATE
+        )
+        VALUES (
+            USER_SEQ.NEXTVAL,
+            #{u_id},
+            #{u_pw},
+            #{u_name},
+            #{u_mail},
+            #{u_phone},
+            #{u_sc_num},
+            #{u_address},
+            CURRENT_TIMESTAMP,
+            CURRENT_TIMESTAMP
+        )
+    </insert>
+    <select id="selectUserForLogin" resultType="com.office.ticketreserve.user.UserDto">
+        SELECT 
+        	* 
+        FROM 
+        	TBL_USER 
+        WHERE 
+        	U_ID = #{u_id}
+    </select>
+   <update id="updateUserInfo" parameterType="com.office.ticketreserve.user.UserDto">
+	    UPDATE 
+	    	TBL_USER
+	    SET 
+	    	U_NAME = #{u_name},
+	        U_MAIL = #{u_mail},
+	        U_PHONE = #{u_phone},
+	        U_ADDRESS = #{u_address},
+	        U_MOD_DATE = CURRENT_TIMESTAMP
+	    WHERE 
+	    	U_NO = #{u_no}
+	</update>
+    
+    <select id="getLatestUserInfo" resultType="com.office.ticketreserve.user.UserDto" parameterType="String">
+        SELECT 
+        	* 
+        FROM 
+        	TBL_USER 
+        WHERE 
+        	U_ID = #{u_id}
+    </select>
 	<delete id="deleteUser" 
 			parameterType="Integer">
 		DELETE FROM 

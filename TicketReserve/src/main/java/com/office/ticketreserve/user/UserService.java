@@ -58,16 +58,15 @@ public class UserService {
 	public int createAccountConfirm(UserDto userDto) {
 		log.info("createAccountConfirm");
 		
-		boolean isMember = userDao.isUser(userDto.getU_id());
+		boolean isMember = IUserDao.isUser(userDto.getU_id());
 		
 		if (!isMember) {
 			
-//			userDto.setU_pw(passwordEncoder.encode(userDto.getU_pw()));
 			AdminDto adminDtos= adminDaoForMyBatis.selectAdminById(userDto.getU_id());
 			if(adminDtos != null) {
 				return ID_ALREADY_EXIST;
 			}
-			int result = userDao.insertUser(userDto);
+			int result = IUserDao.insertUser(userDto);
 			
 			if (result == DATABASE_COMMUNICATION_TROUBLE) {
 				log.info("DATABASE COMMUNICATION TROUBLE");
@@ -88,7 +87,7 @@ public class UserService {
 	public boolean checkId(String u_id_check) {
 		log.info("[UserService] checkId()");
 		
-		boolean result = userDao.isUser(u_id_check); 
+		boolean result = IUserDao.isUser(u_id_check);
 		if(!result) {
 			AdminDto adminDtos= adminDaoForMyBatis.selectAdminById(u_id_check);
 			if(adminDtos != null) {
@@ -106,7 +105,8 @@ public class UserService {
 	public Object userLoginConfirm(UserDto userDto) {
 	    log.info("[UserService] userLoginConfirm()");
 	    
-	    UserDto seletedUserDto= userDao.selectUserForLogin(userDto);
+	   // UserDto seletedUserDto= userDao.selectUserForLogin(userDto);
+	    UserDto seletedUserDto = IUserDao.selectUserForLogin(userDto);
 	    
 	    if(seletedUserDto != null) {
 	        return seletedUserDto;
@@ -127,9 +127,10 @@ public class UserService {
 		log.info("[UserService] userModifyConfirm()");
 		
 		int result =userDao.editUserInfo(userDto);
+		//int result = IUserDao.editUserInfo(userDto);
 		
 		if(result > 0)
-			return userDao.getLatestUserInfo(userDto);
+			return  userDao.getLatestUserInfo(userDto); //IUserDao.getLatestUserInfo(userDto);
 		else
 			return null;
 	}
