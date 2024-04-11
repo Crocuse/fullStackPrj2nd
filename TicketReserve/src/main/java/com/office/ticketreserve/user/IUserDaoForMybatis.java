@@ -14,6 +14,8 @@ public interface IUserDaoForMybatis {
 	public int insertUser(UserDto userDto);
 	public UserDto selectUserForLogin(UserDto userDto);
 
+	 public int updateUserInfo(UserDto userDto);
+	 public UserDto getLatestUserInfo(String u_id);
 
 	public UserDto selectUser(int u_no);
 	public int deleteUser(int u_no) ;
